@@ -8,6 +8,7 @@ Forward web browser http traffic over httpp/udp
 
 * forward http traffic over httpp/udp
 * high udp data transfer performance
+* easy setup as local forward proxy
 
 ### Install
 * npm install httpp-forward, or git clone https://github.com/InstantWebP2P/httpp-forward.git && cd httpp-forward && npm install
@@ -15,8 +16,8 @@ Forward web browser http traffic over httpp/udp
   https://github.com/InstantWebP2P/node-httpp
 
 ### Usage/API
-* for http proxy server, refer to demo/webproxy.js. to start it, just node demo/webproxy.js
-* for httpp-forward util, refer to bin/httpp-forward. to start it, just node bin/httpp-forward --key usrkey(MUST) --http_port xxx --socks_port xxx --export_vurl vURL --enable_export
+* for httpp-forward demo, refer to demo/proxy.js. to start it, just node demo/proxy.js
+* for httpp-forward utility, refer to bin/httpp-forward. to start it, just node bin/httpp-forward --port xxx
 
 <br/>
 ### License

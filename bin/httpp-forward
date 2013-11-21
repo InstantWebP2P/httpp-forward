@@ -1,0 +1,59 @@
+#!/usr/bin/env node
+
+//
+// Please install node-httpp binary in your system exec dir, like /usr/bin/ or /usr/local/bin/
+//
+
+var util  = require('util'),
+    argv = require('optimist').argv,
+    Proxy = require('../proxy');
+
+var help = [
+    "usage: httpp-forward [options] ",
+    "",
+    "Starts a httpp-forward server using the specified command-line options",
+    "",
+    "options:",
+    "  -p, --port   TCP Port      Forward proxy server to listen",
+    "  -u, --user   USER          User to drop privileges once server socket is bound, Optional",
+    "      --help                 You're staring at it"
+].join('\n');
+
+if (argv.help || Object.keys(argv).length === 2) {
+  return util.puts(help);
+}
+
+var port = argv.p || argv.port,
+    user = argv.u || argv.user;
+
+//
+// Check arguments
+//
+port = port || 51868;
+
+//
+// Create the server with the specified options
+//
+var prxy = new Proxy(function(err, proxy){
+    if (err || !proxy) {
+        console.log(err+',create proxy failed');
+        return 
+    }
+    
+    // start http forward proxy service
+    var http = require('http');
+    var pxySrv = http.createServer();
+    
+    pxySrv.on('request', proxy.httpProxy);
+    pxySrv.on('connect', proxy.httpTunnel);
+    
+    pxySrv.listen(port);
+    console.log('Httpp forwar proxy server listen on port '+port);
+});
+
+//
+// Drop privileges if requested
+//
+if (typeof user === 'string') {
+    process.setuid(user);
+}
