@@ -8,7 +8,7 @@ var URL = require('url'),
     HTTPP = require('httpp');
 
 // Debug level
-var Debug = 1;
+var Debug = 0;
 
 // Proxy class
 // - fn: callback to pass proxy informations
