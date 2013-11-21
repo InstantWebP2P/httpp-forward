@@ -312,7 +312,7 @@ Proxy.connect_httpp = function(port) {
 	    var reshed = {};
 	    var _res_writeHead = res.writeHead;
 	    
-	    res.writeHead = function(statusCode, reasonPhrase, headers) {	        
+	    res.writeHead = function(statusCode, reasonPhrase, headers) {	       
 	        reshed.statusCode = statusCode;
 	        reshed.headers = {};
 	        
@@ -324,20 +324,23 @@ Proxy.connect_httpp = function(port) {
 	        
 	        Object.keys(reshed.headers).forEach(function (key) {
 		        res.setHeader(key, reshed.headers[key]);
-		    });
+		});
 		    
-		    // set httpp capacity
-		    if ('alternate-protocol' in res.headers) {
-		        if (!althttpp.test(res.headers['alternate-protocol'])) {
-		            res.headers['alternate-protocol'] = 'httpp:'+port+',' + 
-		                                                 res.headers['alternate-protocol'];
-		        }
-		    } else {
-		        res.setHeader('alternate-protocol', 'httpp:'+port);
+		// set httpp capacity
+                var altproto = res.getHeader('alternate-protocol');
+                   
+                if (altproto && altproto.length) {
+		    if (!althttpp.test(altproto)) {
+		        altproto = 'httpp:'+port+',' + altproto; 
 		    }
+		} else {
+		    altproto = 'httpp:'+port;
+		}
+		res.setHeader('alternate-protocol', altproto);
 		    
-		    // write statusCode
-		    _res_writeHead(reshed.statusCode || 200);
+                // write statusCode
+                res.writeHead = _res_writeHead;
+		res.writeHead(reshed.statusCode || 200);
 	    };
 	    
 	    if (next) next();
