@@ -340,6 +340,6 @@ Proxy.connect_httpp = function(port) {
 		    _res_writeHead(reshed.statusCode || 200);
 	    };
 	    
-	    next();
+	    if (next) next();
 	};
 };
