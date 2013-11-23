@@ -31,8 +31,7 @@ var Proxy = module.exports = function(fn){
                 socket.end();
                 return;
             } else if (cap && (cap.proto === 'httpp')) {
-                ///if (Debug) 
-                console.log('Detected httpp, '+JSON.stringify(cap));
+                if (Debug) console.log('Detected httpp, '+JSON.stringify(cap)+' for http://'+req.url);
                 var altport = cap.port;
                 
                 if (Debug) console.log('https tunnel proxy, UDT connect to %s:%d', srvip, altport);
@@ -108,8 +107,7 @@ var Proxy = module.exports = function(fn){
                 resErr(err + ",http tunnel proxy to " + req.url + " failed");
                 return;
             } else if (cap && (cap.proto === 'httpp')) {
-                ///if (Debug) 
-                console.log('Detected httpp, '+JSON.stringify(cap));
+                if (Debug) console.log('Detected httpp, '+JSON.stringify(cap)+' for '+'http://'+srvip+':'+srvport+path);
                 var altport = cap.port;
                 
                 if (Debug) console.log('httpp tunnel proxy, connect to %s:%d', srvip, altport);
@@ -291,6 +289,8 @@ Proxy.prototype.probeHttpp = function(urle, fn){
             if (altproto && altproto[0]){
                 var altport = parseInt(altproto[0].split(':')[1]);
                 capacity = {proto: 'httpp', port: altport};
+                
+                console.log('Detected httpp on '+host);
             }
             
             // check quic, TBD...
