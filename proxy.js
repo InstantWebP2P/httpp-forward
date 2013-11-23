@@ -290,7 +290,7 @@ Proxy.prototype.probeHttpp = function(urle, fn){
                 var altport = parseInt(altproto[0].split(':')[1]);
                 capacity = {proto: 'httpp', port: altport};
                 
-                console.log('Detected httpp on '+host);
+                console.log('Detected httpp on '+urle);
             }
             
             // check quic, TBD...
