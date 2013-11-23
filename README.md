@@ -18,6 +18,7 @@ Forward web browser http traffic over httpp/udp
 ### Usage/API
 * for httpp-forward demo, refer to demo/proxy.js. to start it, just node demo/proxy.js
 * for httpp-forward utility, refer to bin/httpp-forward. to start it, just node bin/httpp-forward --port xxx
+* httpp-forward is designed to work with connect-httpp enabled server, https://github.com/InstantWebP2P/connect-httpp
 
 <br/>
 ### License
