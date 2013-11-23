@@ -230,7 +230,7 @@ var Proxy = module.exports = function(fn){
 				    
 				srvSocket.on('error', function(e) {
 				    console.log("http tunnel proxy to NET " + req.url + ", socket error: " + e);
-				    socket.end();
+				    resErr("http tunnel proxy to NET " + req.url + ", socket error: " + e);
 				});
             }
         });	    
