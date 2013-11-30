@@ -265,7 +265,8 @@ Proxy.prototype.probeHttpp = function(urle, fn){
     var options = {
 	        port: port,
 	    hostname: hostname,
-	      method: 'GET',
+	      ///method: 'GET',
+	      method: 'HEAD',
 	        path: path,
     };
 	
