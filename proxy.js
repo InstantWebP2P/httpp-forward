@@ -242,9 +242,76 @@ var Proxy = module.exports = function(fn){
         });	    
     }
     
+    // 2.2
+    // socks proxy, support soccks4/socks4a/socks5
+    var socksProxy = function(socket, port, address, proxy_ready){
+        var srvip   = address;
+        var srvport = port;
+        
+        // callback function
+        function cb(err, cap){
+            if (err) {
+                console.log(err + ",socks tunnel proxy to " + address+':'+port + " failed");
+                socket.end();
+                return;
+            } else if (cap && (cap.proto === 'httpp')) {
+                if (Debug) console.log('Detected httpp, '+JSON.stringify(cap)+' for http://'+address+':'+port);
+                var altport = cap.port;
+                
+                if (Debug) console.log('socks tunnel proxy, UDT connect to %s:%d', srvip, altport);
+                var srvSocket = UDT.connect(altport, srvip, function() {
+                    if (Debug) console.log('httpp tunnel proxy, UDT got connected!');   
+                    
+                    // send socks response      
+					proxy_ready();
+					
+				    socket.pipe(srvSocket);
+				    srvSocket.pipe(socket);
+                });
+  
+				srvSocket.setNoDelay(true);
+				    
+				srvSocket.on('error', function(e) {
+				    console.log("httpp tunnel proxy to UDT " + address+':'+port + ", socket error: " + e);
+				    socket.end();
+				});
+            } 
+            ///else if (proto === 'quic') {
+                // TBD...
+            ///} 
+            else {
+            	if (Debug) console.log('socks tunnel proxy, NET connect to %s:%d', srvip, srvport);
+                var srvSocket = NET.connect(srvport, srvip, function() {
+                    if (Debug) console.log('http tunnel proxy, NET got connected!');   
+                    
+                    // send socks response      
+					proxy_ready();
+					
+				    socket.pipe(srvSocket);
+				    srvSocket.pipe(socket);
+                });
+  
+				srvSocket.setNoDelay(true);
+				    
+				srvSocket.on('error', function(e) {
+				    console.log("http tunnel proxy to NET " + address+':'+port + ", socket error: " + e);
+				    socket.end();
+				});
+            }
+        }
+        
+        // probe httpp capacity for http firstly
+        self.probeHttpp('http://'+address+':'+port, function(err, cap){
+            if (err) {
+                // then, probe for https
+                self.probeHttpp('https://'+address+':'+port, cb);
+            } else cb(err, cap);
+        });
+    }
+        
     // 3.
     // pass forwarder App
-    fn(null, {httpTunnel: httpTunnel, httpProxy: httpProxy});
+    fn(null, {httpTunnel: httpTunnel, httpProxy: httpProxy, socksProxy: socksProxy});
 };
 
 // probe httpp capability

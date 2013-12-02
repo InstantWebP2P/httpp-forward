@@ -15,4 +15,11 @@ var srv = new Proxy(function(err, proxy){
     
     pxySrv.listen(51868);
     console.log('Httpp forwar proxy server listen on port 51868');
+    
+    // start socks forward proxy service
+    var socks = require('socks5');
+    var sockspxySrv = socks.createServer(proxy.socksProxy);
+    
+    sockspxySrv.listen(51888);
+    console.log('Socks forward proxy server listen on port 51888');
 });

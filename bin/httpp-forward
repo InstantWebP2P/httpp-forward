@@ -14,22 +14,25 @@ var help = [
     "Starts a httpp-forward server using the specified command-line options",
     "",
     "options:",
-    "  -p, --port   TCP Port      Forward proxy server to listen",
-    "  -u, --user   USER          User to drop privileges once server socket is bound, Optional",
-    "      --help                 You're staring at it"
+    "  -h, --http_port   TCP Port   HTTP Forward proxy server to listen",
+    "  -s, --socks_port  TCP Port   SOCKS Forward proxy server to listen",
+    "  -u, --user        USER       User to drop privileges once server socket is bound, Optional",
+    "      --help                   You're staring at it"
 ].join('\n');
 
 if (argv.help || Object.keys(argv).length === 2) {
   return util.puts(help);
 }
 
-var port = argv.p || argv.port,
+var http_port = argv.h || argv.http_port,
+    socks_port = argv.s || argv.socks_port,
     user = argv.u || argv.user;
 
 //
 // Check arguments
 //
-port = port || 51868;
+http_port = http_port || 51868;
+socks_port = socks_port || 51888;
 
 //
 // Create the server with the specified options
@@ -47,8 +50,15 @@ var prxy = new Proxy(function(err, proxy){
     pxySrv.on('request', proxy.httpProxy);
     pxySrv.on('connect', proxy.httpTunnel);
     
-    pxySrv.listen(port);
-    console.log('Httpp forwar proxy server listen on port '+port);
+    pxySrv.listen(http_port);
+    console.log('Httpp forwar proxy server listen on port '+http_port);
+    
+    // start socks forward proxy service
+    var socks = require('socks5');
+    var sockspxySrv = socks.createServer(proxy.socksProxy);
+    
+    sockspxySrv.listen(socks_port);
+    console.log('Socks forwar proxy server listen on port '+socks_port);
 });
 
 //
