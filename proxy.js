@@ -161,6 +161,9 @@ var Proxy = module.exports = function(fn){
 					if (req.trailers) {
 					    treq.end();
 					}
+					req.on('close', function () {
+					    treq.abort();
+					});
                 });
   					    
 				srvSocket.on('error', function(e) {
@@ -224,6 +227,9 @@ var Proxy = module.exports = function(fn){
 					if (req.trailers) {
 					    treq.end();
 					}
+					req.on('close', function () {
+					    treq.abort();
+					});					
                 });
   
 				srvSocket.setNoDelay(true);
