@@ -1,4 +1,4 @@
-// Simple http server to server PAC file
+// Simple http server to serve PAC file
 //
 // Copyright (c) 2013 Tom Zhou<iwebpp@gmail.com>
 //
