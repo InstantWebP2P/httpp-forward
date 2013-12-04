@@ -6,8 +6,9 @@ var http = require('http');
 var fs = require('fs');
 
 var srv = http.createServer(function(req, res){
-    res.writeHead(200, {'Content-Type': 'text/plain'});
-    fs.createReadStream(__dirname+'../pac/httpp.pac').pipe(res);
+    res.writeHead(200, {'Content-Type': 'application/x-ns-proxy-autoconfig'});
+    res.write(fs.readFileSync(__dirname+'/../pac/httpp.pac'));
+    res.end();
 });
 
 srv.listen(8888);
