@@ -11,21 +11,21 @@ Forward web browser http traffic over httpp/udp
 * easy setup as local forward proxy
 
 ### Install
-* npm install httpp-forward, or git clone https://github.com/InstantWebP2P/httpp-forward.git && cd httpp-forward && npm install
+* npm install httpp-forward, or git clone [httpp-forward](https://github.com/InstantWebP2P/httpp-forward.git) && cd httpp-forward && npm install
 * httpp-forward depend on node-httpp, please npm install httpp-binary.if the binary didn't work, just build it from source:
-  https://github.com/InstantWebP2P/node-httpp
+  [node-httpp](https://github.com/InstantWebP2P/node-httpp)
 
 ### Usage/API
 * for httpp-forward demo, refer to demo/proxy.js. to start it, just node demo/proxy.js
 * for httpp-forward utility, refer to bin/httpp-forward. to start it, just node bin/httpp-forward --port xxx
-* httpp-forward is designed to work with connect-httpp enabled server, https://github.com/InstantWebP2P/connect-httpp
+* httpp-forward is designed to work with connect-httpp enabled server, [connect-httpp](https://github.com/InstantWebP2P/connect-httpp)
 
 <br/>
 ### License
 
 (The MIT License)
 
-Copyright (c) 2012-2013 Tom Zhou(iwebpp@gmail.com)
+Copyright (c) 2012-present Tom Zhou(appnet.link@gmail.com)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
