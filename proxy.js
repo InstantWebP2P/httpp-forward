@@ -1,4 +1,4 @@
-// Copyright (c) 2013 Tom Zhou<iwebpp@gmail.com>
+// Copyright (c) 2013-present Tom Zhou<appnet.link@gmail.com>
 
 var URL = require('url'),
     NET = require('net'),
