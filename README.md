@@ -13,7 +13,7 @@ Forward web browser http traffic over httpp/udp
 ### Install
 * npm install httpp-forward, or git clone [httpp-forward](https://github.com/InstantWebP2P/httpp-forward.git) && cd httpp-forward && npm install
 * httpp-forward depend on node-httpp, please npm install httpp-binary.if the binary didn't work, just build it from source:
-  [node-httpp](https://github.com/InstantWebP2P/node-httpp)
+  [nodejs-httpp](https://github.com/InstantWebP2P/nodejs-httpp)
 
 ### Usage/API
 * for httpp-forward demo, refer to demo/proxy.js. to start it, just node demo/proxy.js
